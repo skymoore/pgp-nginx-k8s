@@ -1,0 +1,22 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: pgp-skymoore-com
+
+labels:
+  - includeSelectors: true
+    pairs:
+      app: pgp-skymoore-com
+
+configMapGenerator:
+  - name: default-conf
+    files:
+      - default.conf
+
+resources:
+  - namespace.yaml
+  - certificate.yaml
+  - nginx-statefulset.yaml
+  - nginx-svc.yaml
+  - ingress.yaml

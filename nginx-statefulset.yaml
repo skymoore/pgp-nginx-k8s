@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: nginx-statefulset
+spec:
+  serviceName: "nginx"
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - name: nginx-port
+          containerPort: 8080
+        volumeMounts:
+        - name: conf
+          mountPath: /etc/nginx/conf.d
+      volumes:
+      - name: conf
+        configMap:
+          name: default-conf
+          items:
+          - key: default.conf
+            path: default.conf
